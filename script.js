@@ -1,46 +1,63 @@
 const prevButton = document.getElementById('prev')
 const nextButton = document.getElementById('next')
 const items = document.querySelectorAll('.item')
-const dots = document.querySelectorAll('.dots')
-const numberIndicator = document.querySelectorAll('.numbers')
-const list = document.querySelectorAll('.list')
+const dots = document.querySelectorAll('.dot')
+const numberIndicator = document.querySelector('.numbers')
 
-let active = 0;
+let active = 0
 const total = items.length
-let timer;
-
-// let ou const (var) quando criar uma variavel e ela assumir um valor e ela continuar com esse valor sempre, será const - valor constante
-//let para variáveis que trocam os valores
-
+let timer
 
 function update(direction) {
-    document.querySelector('.item.active').classList.remove('active')
-    document.querySelector('dot.active').classList.remove('active')
+    const currentItem = document.querySelector('.item.active')
+    const currentDot = document.querySelector('.dot.active')
 
-    if(direction > 0) {
-        active = active + 1
-        
-        if(active === total){
-            active = 0
-        }
-    } 
-    
-    else if(direction < 0) {
-        active = active - 1
+    if (currentItem) currentItem.classList.remove('active')
+    if (currentDot) currentDot.classList.remove('active')
 
-        if(active < 0) {
-            active = total - 1
-        }
+    if (direction > 0) {
+        active++
+        if (active === total) active = 0
+    } else if (direction < 0) {
+        active--
+        if (active < 0) active = total - 1
     }
 
     items[active].classList.add('active')
     dots[active].classList.add('active')
+    numberIndicator.textContent = String(active + 1).padStart(2, '0')
+
+    resetTimer()
 }
 
-prevButton.addEventListener('click', () => {
-    update(-1)
+function resetTimer() {
+    clearInterval(timer)
+    timer = setInterval(() => {
+        update(1)
+    }, 5000)
+}
+
+prevButton.addEventListener('click', () => update(-1))
+nextButton.addEventListener('click', () => update(1))
+
+resetTimer()
+
+let startX = 0
+
+list.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX
 })
 
-nextButton.addEventListener('click', () => {
-    update(+1)
+list.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX
+    const diff = startX - endX
+
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+            update(1) // swipe esquerda
+        } else {
+            update(-1) // swipe direita
+        }
+    }
 })
+

@@ -1,0 +1,126 @@
+@charset "UTF-8";
+
+
+/* =========================
+   MOBILE — até 768px
+========================= */
+@media (max-width: 768px) {
+
+  body {
+    overflow-y: auto;
+  }
+
+  header {
+    position: relative;
+    width: 100%;
+    padding: 15px 20px;
+  }
+
+  header nav ul {
+    gap: 20px;
+    font-size: 0.9rem;
+  }
+
+  .container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    padding-top: 20px;
+  }
+
+  .list {
+    width: 100%;
+    height: auto;
+  }
+
+  .item {
+    position: relative;          /* 🔑 CHAVE DA RESPONSIVIDADE */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 100px 20px 40px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .item:not(.active) {
+    display: none;               /* mantém lógica do slider */
+  }
+
+  .product-img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .product-img img {
+    max-width: 70%;
+    max-height: 250px;
+  }
+
+  .content {
+    width: 100%;
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-name {
+    font-size: 2.2rem;
+  }
+
+  .product-description {
+    font-size: 0.95rem;
+  }
+
+  .arrow {
+    width: 95%;
+    top: auto;
+    bottom: 120px;
+  }
+
+  .indicator {
+    bottom: 30px;
+  }
+}
+
+/* =========================
+   TABLET — 769px até 1024px
+========================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  header {
+    padding: 20px 30px;
+  }
+
+  .list {
+    width: 90%;
+  }
+
+  .content {
+    padding-right: 40px;
+  }
+
+  .product-name {
+    font-size: 3.2rem;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .item {
+    animation: fadeUp 0.5s ease;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
